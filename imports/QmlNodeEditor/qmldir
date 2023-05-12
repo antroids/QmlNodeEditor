@@ -1,0 +1,4 @@
+Module QmlNodeEditor
+
+NodeView 1.0 NodeView.qml
+NodeViewStyle 1.0 NodeViewStyle.qml
