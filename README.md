@@ -21,4 +21,4 @@ NodeView {
 Look into DemoApp.qml for samples.
 
 ## Documentation
-[NodeView](docs/html/db/da9/class_node_view.html)
+[NodeView](https://antroids.github.io/QmlNodeEditor/html/db/da9/class_node_view.html)
