@@ -18,7 +18,7 @@ NodeView {
     model: nodesModel
 }
 ```
-
-There is no documentation yet. 
 Look into DemoApp.qml for samples.
-The most of the components of the nodes view can be customized by replacing them.
+
+## Documentation
+[NodeView](docs/html/db/da9/class_node_view.html)

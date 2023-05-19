@@ -23,10 +23,10 @@ Item {
         property real endX: 0
         property real endY: 0
         property QtObject style: parent.style
-        property string state: parent.state
+        property string state: parent.state // "focused", "hovered"
 
-        property point fromPortPosition
-        property point toPortPosition
+        property point fromPortPosition // Port side on the Node, fromPortPosition.x === -1 if port is on the left side, 1 on the right
+        property point toPortPosition // To Port side on the Node, toPortPosition.x === -1 if port is on the left side, 1 on the right
 
         sourceComponent: connectionShape
 

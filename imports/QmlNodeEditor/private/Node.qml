@@ -126,9 +126,9 @@ Item {
                         if (drag.active) {
                             nodeRoot.nodeModel.x = nodeRoot.x;
                             nodeRoot.nodeModel.y = nodeRoot.y;
+                            nodeView.nodePositionChanged(nodeRoot.nodeModel.nodeId, nodeRoot.x, nodeRoot.y);
                             nodeRoot.x = Qt.binding(function() {  return nodeRoot.nodeModel.x; });
                             nodeRoot.y = Qt.binding(function() {  return nodeRoot.nodeModel.y; });
-                            nodeView.nodePositionChanged(nodeRoot.nodeModel.nodeId, nodeRoot.x, nodeRoot.y);
                         }
                     }
 

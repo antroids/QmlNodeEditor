@@ -227,6 +227,8 @@ Window {
     NodeView {
         model: nodesModel
 
+        anchors.fill: parent
+
         onConnectionAdded: (fromNodeId, fromPortId, toNodeId, toPortId) => nodesModel.addConnection(fromNodeId, fromPortId, toNodeId, toPortId);
         onNodePositionChanged: (nodeId, nodeX, nodeY) => {
                                    var nodeIndex = nodesModel.findNodeIndex(nodeId);
