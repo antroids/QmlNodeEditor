@@ -7,6 +7,8 @@ import QtQuick.Controls 2.15
 
 import QmlNodeEditor 1.0
 
+import "node" as Node
+
 Window {
     width: 640
     height: 480
@@ -24,6 +26,8 @@ Window {
         ListElement {
             nodeId: 1
             name: "Node 1 long name long name long name long name long name long name long name long name"
+            type: "Producer"
+            value: "Producer test value Producer test value Producer \ntest value Producer test value Producer test value "
             x: 100
             y: 100
             leftPorts: [
@@ -57,6 +61,8 @@ Window {
             x: 300
             y: 200
             name: "Node 2"
+            type: "Parser"
+            value: "Parser test value Parser test value Parser test value Parser test value Parser test value Parser test value "
             removable: true
             leftPorts: [
                 ListElement {
@@ -97,6 +103,9 @@ Window {
             x: 50
             y: 250
             name: "Node 3"
+            type: "Constant"
+            value: "123"
+            valueType: "Integer"
             removable: false
             leftPorts: [
                 ListElement {
@@ -133,6 +142,7 @@ Window {
                     name: "Port 38"
                 }
             ]
+            rightPorts: []
             connections: []
         }
 
@@ -216,18 +226,75 @@ Window {
     }
 
     Button {
-        text: "Test"
+        text: "Print"
 
         onClicked: {
-            nodesModel.setProperty(0, "x", 300);
+            console.info("Model: " + nodesModel.get(0).value);
         }
     }
 
+    Component {
+        id: nodeTypeCenterComponentLoader
+
+        Loader {
+            source: "node/" + nodeModel.type + ".qml"
+        }
+    }
+
+    Component {
+        id: nodeTopContentComponent
+
+        Item {
+            height: 25
+
+            Button {
+                anchors.left: parent.left
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
+                anchors.margins: 2
+
+                text: "Add port"
+
+                onClicked: () => {
+                                addPort(nodeModel.leftPorts);
+                           }
+            }
+
+            Button {
+                anchors.right: parent.right
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
+                anchors.margins: 2
+
+                text: "Add port"
+
+                onClicked: () => {
+                                addPort(nodeModel.rightPorts);
+                           }
+            }
+
+            function addPort(portList) {
+                var maxPortId = 0;
+                for (var i = 0; i < portList.count; i++) {
+                    var port = portList.get(i);
+                    if (port && port.portId > maxPortId) {
+                        maxPortId = port.portId;
+                    }
+                }
+
+                var nextPortId = maxPortId + 1;
+                portList.append({ portId: nextPortId, name: "Port " + nextPortId });
+            }
+        }
+    }
 
     NodeView {
         model: nodesModel
 
         anchors.fill: parent
+
+        nodeCenterContentComponent: nodeTypeCenterComponentLoader
+        nodeTopContentComponent: nodeTopContentComponent
 
         onConnectionAdded: (fromNodeId, fromPortId, toNodeId, toPortId) => nodesModel.addConnection(fromNodeId, fromPortId, toNodeId, toPortId);
         onNodePositionChanged: (nodeId, nodeX, nodeY) => {
